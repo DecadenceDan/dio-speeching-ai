@@ -1,16 +1,12 @@
-# 🎤 Voice ChatGPT
+# 🎤 dio-speeching-ai
 
-Conversa por voz com o ChatGPT usando **Whisper** (Speech-to-Text) e **gTTS** (Text-to-Speech).
+Conversa por voz com IA usando **Whisper** (Speech-to-Text), **Groq + LLaMA 3** (LLM) e **gTTS** (Text-to-Speech).
 
 ## 🔄 Como funciona
 
-```
-Microfone → Whisper (STT) → ChatGPT API → gTTS (TTS) → Alto-falante
-```
-
 1. O usuário fala — o áudio é capturado pelo microfone
 2. **Whisper** transcreve a fala para texto (suporta múltiplos idiomas)
-3. O texto é enviado ao **ChatGPT** via API da OpenAI
+3. O texto é enviado ao **LLaMA 3** via **Groq API** (gratuito)
 4. A resposta é sintetizada em voz pelo **Google Text-to-Speech (gTTS)**
 
 ## 🛠️ Tecnologias
@@ -18,47 +14,47 @@ Microfone → Whisper (STT) → ChatGPT API → gTTS (TTS) → Alto-falante
 | Tecnologia | Papel |
 |---|---|
 | [Whisper](https://github.com/openai/whisper) | Speech-to-Text (ASR) |
-| [ChatGPT (gpt-3.5-turbo)](https://platform.openai.com/docs) | Modelo de linguagem |
+| [Groq + LLaMA 3](https://console.groq.com) | Modelo de linguagem (gratuito) |
 | [gTTS](https://gtts.readthedocs.io/) | Text-to-Speech |
 
 ## ⚙️ Pré-requisitos
 
 - Python 3.9+
-- Chave de API da OpenAI
+- Chave de API da Groq (gratuita em console.groq.com)
 - Microfone e alto-falante funcionando
-- `ffmpeg` instalado (necessário para o Whisper)
+- `ffmpeg` instalado
 
 ### Instalando o ffmpeg
 
 ```bash
+# Windows
+winget install ffmpeg
+
 # Ubuntu/Debian
 sudo apt install ffmpeg
 
 # macOS
 brew install ffmpeg
-
-# Windows
-# Baixe em https://ffmpeg.org/download.html e adicione ao PATH
 ```
 
 ## 🚀 Instalação
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/voice-chatgpt.git
-cd voice-chatgpt
+git clone https://github.com/DecadenceDan/dio-speeching-ai.git
+cd dio-speeching-ai
 
 # 2. Crie e ative o ambiente virtual
 python -m venv .venv
+.venv\Scripts\activate  # Windows
 source .venv/bin/activate  # Linux/macOS
-.venv\Scripts\activate     # Windows
 
 # 3. Instale as dependências
 pip install -r requirements.txt
 
 # 4. Configure a chave de API
 cp .env.example .env
-# Edite o .env e adicione sua OPENAI_API_KEY
+# Edite o .env e adicione sua GROQ_API_KEY
 ```
 
 ## ▶️ Uso
@@ -77,32 +73,27 @@ Pressione **ENTER** para iniciar a gravação, fale por 5 segundos e aguarde a r
 python examples/text_mode.py
 ```
 
-## ⚙️ Configurações
-
-No arquivo `src/main.py` você pode ajustar:
-
-| Variável | Padrão | Descrição |
-|---|---|---|
-| `DURATION` | `5` | Segundos de gravação por turno |
-| `WHISPER_MODEL` | `"base"` | Modelo Whisper (`tiny`, `base`, `small`, `medium`, `large`) |
-| `lang` em `text_to_speech()` | `"pt"` | Idioma da síntese de voz |
-
-> **Nota:** Modelos Whisper maiores são mais precisos, porém mais lentos. Para uso local, `base` ou `small` oferecem bom equilíbrio.
-
 ## 📁 Estrutura
 
 ```
-voice-chatgpt/
+dio-speeching-ai/
+
 ├── src/
+
 │   └── main.py          # Pipeline principal (voz completo)
+
 ├── examples/
+
 │   └── text_mode.py     # Modo texto (sem microfone)
+
 ├── .env.example         # Exemplo de variáveis de ambiente
+
 ├── .gitignore
+
 ├── requirements.txt
+
 └── README.md
 ```
-
 ## 📄 Licença
 
 MIT
